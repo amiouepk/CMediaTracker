@@ -5,6 +5,7 @@
 
 void createFile();
 void startHelpFunction();
+void NormalMode();
 
 // **for now**
 // handles input
@@ -30,6 +31,7 @@ int main(int argc, char** argv){
             break;
         case 'n':
             printf("normal setting\n");
+            NormalMode();
             break;
         default:
             printf("please enter a valid setting\n");
@@ -45,6 +47,18 @@ void helpFunction(){
     printf("  -h, --help         shows this help message and exits\n");
     printf("  -d, --development  enables aditional options and more verbose results\n");
     printf("  -n, --normal       enables working options and regular results\n");
+
+    return;
+}
+
+void NormalMode(){
+
+    printf("Options: \n");
+    printf("  createFile: Creates file for a given category. If file is already created\n");
+    printf("              for a given category, use the rename");
+    printf("");
+
+
 
     return;
 }

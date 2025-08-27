@@ -1,9 +1,9 @@
 CC = x86_64-w64-mingw32-gcc
 CFLAGS = -Wall -g -Wextra
 TARGET = program.exe
-OBJS = print_help.o main.o 
+OBJS = print_help.c main.c 
 
-SDL_LIBS = -lSDL2main -lSDL2
+#SDL_LIBS = -lSDL2main -lSDL2
 
 DEST_DIR = /mnt/c/Users/anish/OneDrive/Desktop/Code/mediaProject
 
@@ -13,14 +13,11 @@ make: $(OBJS)
 
 #make_file: $(CC) file_help.c -o file_help.o
 
-main.o:
-	$(CC) main.c -o main.o 
+# main.o:
+# 	$(CC) main.c -o main.o 
 
-
-print_help.o:
-	$(CC) print_help.c -o print_help.o $(SDL_LIBS)
-
-
+# print_help.o:
+# 	$(CC) print_help.c -o print_help.o 
 
 clean:
 	rm $(DEST_DIR)/program.exe

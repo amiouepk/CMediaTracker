@@ -61,7 +61,6 @@ void GeneralOptions(){
         //printf("\n");
         printf("Number: ");
         scanf("%d", &general_option);
-        printf("scanned\n");
 
         switch(general_option){
             case 1:
@@ -93,6 +92,7 @@ void FilesOptions(){
         printf("  5. exit   : exits file options (returns to General Options)\n");
             printf("Number: ");
         scanf("%i", &file_option);
+        
         switch (file_option){
             case 1: 
                 DefaultFileCreate();

@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
+//#include <bool.h>
 #include <getopt.h>
 //#include <gtk/gtk.h>
 
-void createFile();
+
 void startHelpFunction();
-void NormalMode();
+void GeneralOptions();
+void FilesOptions();
+void numPrintmessage();
+void DefaultFileCreate();
+void createFile();
 
 // **for now**
 // handles input
@@ -31,7 +37,7 @@ int main(int argc, char** argv){
             break;
         case 'n':
             printf("normal setting\n");
-            NormalMode();
+            GeneralOptions();
             break;
         default:
             printf("please enter a valid setting\n");
@@ -41,7 +47,7 @@ int main(int argc, char** argv){
     exit(0);
 }
 
-void helpFunction(){
+void startHelpFunction(){
 
     printf("Start options:\n");
     printf("  -h, --help         shows this help message and exits\n");
@@ -51,14 +57,72 @@ void helpFunction(){
     return;
 }
 
-void NormalMode(){
+void GeneralOptions(){
 
-    printf("Options: \n");
-    printf("  createFile: Creates file for a given category. If file is already created\n");
-    printf("              for a given category, use the rename");
-    printf("");
+    int general_option;
+    
 
+    while (1){
+        printf("General Options:\n");
+        numPrintmessage();
+        printf("  1. Files: Access file options\n");
+        //printf("              \n");
+        //printf("\n");
+        printf("Number: ");
+        scanf("%d", &general_option);
+        printf("scanned\n");
+
+        switch(general_option){
+            case 1:
+                FilesOptions();
+                break;
+            default:
+                printf("Please Enter a number 1-9\n");
+
+        }
+    }
 
 
     return;
 }
+
+void FilesOptions(){
+
+    // int* options = calloc(sizeof(int), 4);
+    // if (!options){
+    //     perror("options array calloc error");
+    //     exit(EXIT_FAILURE);
+    // }
+
+    
+    //printf("  \n");
+    int file_option;
+
+    while (1){
+        printf("File Options:\n");
+        numPrintmessage();
+        printf("  1. default: Creates default files with default names (can be customized further after creation)\n");
+        printf("              further after creation)\n");
+        printf("  2. rename : rename existing files\n");
+        printf("  3. create : create new files\n");
+        printf("  4. delete : delete existing files\n");
+        printf("  5. exit   : exits file options (returns to General Options)\n");
+            printf("Number: ");
+        scanf("%i", &file_option);
+        switch (file_option){
+            case 1: 
+
+        }
+    }
+
+    return;
+
+}
+
+void numPrintmessage(){
+
+    printf("  Type a number 1-9 according to the list below\n");
+    return;
+}
+
+

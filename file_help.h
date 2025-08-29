@@ -6,7 +6,7 @@
 
 int ifFileExists(const char* name);
 
-void createFile(const char* name, FILE** fp);
+void createFile(const char* name, FILE* fp);
 
 
 

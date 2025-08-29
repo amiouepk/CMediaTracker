@@ -112,6 +112,7 @@ void GeneralOptions(){
 void TestFileOptions(){
 
     int test_file_option;
+    int test_err;
 
     while (1){
         printf("Test File Options:\n");
@@ -121,10 +122,10 @@ void TestFileOptions(){
         printf("  3. create : create new files\n");
         printf("  4. delete : delete existing files\n");
         printf("  5. exit   : exits file options (returns to General Options)\n");
-        printf("********************************************************************");
+        printf("********************************************************************\n");
         printf("  6. test check\n");
         //printf("")
-            printf("Number: ");
+        printf("Number: ");
         scanf("%i", &test_file_option);
         
         switch (test_file_option){
@@ -138,7 +139,13 @@ void TestFileOptions(){
                 CustomFileCreate();
                 break;
             case 6:
-                ifFileExists("testFileName.txt");
+                test_err = ifFileExists("testFileName.txt");
+                if (test_err < -1){
+                    printf("A file with this name has already been created\n");
+                }
+                else {
+                    printf("check was sucessful\n");
+                }
                 break;
             default:
                 numPrintMessage();

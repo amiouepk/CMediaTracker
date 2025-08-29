@@ -9,11 +9,10 @@
 
 int ifFileExists(char* name){
 
-    //char* full_name = strcat(name, ".csv");
-
-    if (access(name, F_OK)){
-        printf("A file with this name has already been created");
-        return 0;
+    if (!access(name, F_OK)){
+        printf("A file with this name may have already been created\n");
+        printf("Please check file directory\n");
+        return -1;
     }
     
     // if (!access(name, R_OK | W_OK)){
@@ -21,13 +20,12 @@ int ifFileExists(char* name){
     //     return;
     // }
     
-    // printf("all is well\n");
-    return -1;
+    return 0;
 
 
 }
 
-void createFile(const char* name, FILE** fp){
+void createFile(const char* name, FILE* fp){
 
     fp = fopen(name, "w+");
 

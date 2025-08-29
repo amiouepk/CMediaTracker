@@ -112,7 +112,6 @@ void GeneralOptions(){
 void TestFileOptions(){
 
     int test_file_option;
-    int test_err;
 
     while (1){
         printf("Test File Options:\n");
@@ -139,13 +138,7 @@ void TestFileOptions(){
                 CustomFileCreate();
                 break;
             case 6:
-                test_err = ifFileExists("testFileName.txt");
-                if (test_err < -1){
-                    printf("A file with this name has already been created\n");
-                }
-                else {
-                    printf("check was sucessful\n");
-                }
+                ifFileExists("testFileName.txt");
                 break;
             default:
                 numPrintMessage();
@@ -210,11 +203,16 @@ void RenameFile(){
 
 void CustomFileCreate(){
 
-    char* custome_filename = malloc(100 * sizeof(char));
-
+    char* filename = malloc(100 * sizeof(char));
     printf("Print name of file (upto 100 characters): ");
+    scanf("%s", filename);
 
-    scanf("%s", custome_filename);
+    if (ifFileExists(filename))
+        return;
+    
+    int fp = fopen(filename, "w+");
+    if (fp )
+    
     
 
     //if (fopen(custome_filename, ))

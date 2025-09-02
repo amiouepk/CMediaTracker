@@ -1,7 +1,7 @@
 CC = x86_64-w64-mingw32-gcc
 CFLAGS = -Wall -g -Wextra
 TARGET = program.exe
-OBJS = file_help.c print_help.c main.c 
+OBJS = file_help.c io_help.c main.c 
 
 #SDL_LIBS = -lSDL2main -lSDL2
 

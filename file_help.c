@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <errno.h>
 //#include <bool.h>
-#include <getopt.h>
 #include <unistd.h>
-#include "print_help.h"
+//#include "io_help.h"
 
 
 int ifFileExists(char* name){

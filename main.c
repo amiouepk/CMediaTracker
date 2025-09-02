@@ -3,11 +3,14 @@
 #include <errno.h>
 //#include <bool.h>
 #include <getopt.h>
-#include "print_help.h"
+#include "io_help.h"
 #include "file_help.h"
 
 //#include <gtk/gtk.h>
 
+#define FILENAME_SIZE 100
+
+//void exit
 void TestOptions();
 void TestFileOptions();
 void GeneralOptions();
@@ -55,19 +58,28 @@ int main(int argc, char** argv){
 void TestOptions(){
 
     int test_options;
+    char* int_buff = malloc(1024 * sizeof(char));
+    char* c_arr;
 
     while (1){
+
         printf("Test Options:\n");
-        //numPrintMessage();
+        printf("  0. Exit program\n");
         printf("  1. Files: Access test file options\n");
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        scanf("%d", &test_options);
+        test_options = intParseConvert(int_buff);
 
         switch(test_options){
+            case 0:
+                free(int_buff);
+                return;
             case 1:
                 TestFileOptions();
+                break;
+            case -1:
+                numPrintMessage();
                 break;
             default:
                 numPrintMessage();
@@ -76,7 +88,6 @@ void TestOptions(){
         }
     }
 
-
     return;
 }
 
@@ -84,6 +95,7 @@ void TestOptions(){
 void GeneralOptions(){
 
     int general_option;
+    char* int_buff = malloc(1024 * sizeof(char));
     
     while (1){
         printf("General Options:\n");
@@ -92,9 +104,15 @@ void GeneralOptions(){
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        scanf("%d", &general_option);
+        if (!fgets(int_buff, 1024, stdin)){
+            printf("Parsing failed, please entr again\n");
+            continue;
+        }
 
         switch(general_option){
+            case 0:
+                free(int_buff);
+                return;
             case 1:
                 FilesOptions();
                 break;
@@ -126,8 +144,11 @@ void TestFileOptions(){
         //printf("")
         printf("Number: ");
         scanf("%i", &test_file_option);
+
         
         switch (test_file_option){
+            case 0:
+                return;
             case 1: 
                 DefaultFileCreate();
                 break;
@@ -203,19 +224,36 @@ void RenameFile(){
 
 void CustomFileCreate(){
 
-    char* filename = malloc(100 * sizeof(char));
-    printf("Print name of file (upto 100 characters): ");
-    scanf("%s", filename);
+    char* filename = malloc((FILENAME_SIZE + 5) * sizeof(char)); // +5 for .csv\0
+    while (1){
+        printf("Print name of file (upto 100 characters): ");
+        // int filename_size = scanf("%100s", filename);
+        // if (filename_size <= FILENAME_SIZE - 5){
+        //     break;
+        // }
+
+
+        printf("Name is to long\n");
+        printf("Please ");
+    }
+
+
 
     if (ifFileExists(filename))
         return;
     
-    int fp = fopen(filename, "w+");
-    if (fp )
-    
-    
+    FILE* fp = fopen(filename, "w+");
+    if (!fp){
+        perror("Error creating file");
+        return;
+    }
 
-    //if (fopen(custome_filename, ))
+    if (fclose(fp) == EOF){
+        perror("Error closing file");
+        return;
+    }
+
+    printf("file is created\n");
 
     return;
 }

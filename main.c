@@ -8,7 +8,7 @@
 
 //#include <gtk/gtk.h>
 
-#define FILENAME_SIZE 100
+//#define FILENAME_SIZE 100
 
 //void exit
 void TestOptions();
@@ -100,14 +100,13 @@ void GeneralOptions(){
     while (1){
         printf("General Options:\n");
         //numPrintMessage();
+        printf("  0. Exit program\n");
         printf("  1. Files: Access file options\n");
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        if (!fgets(int_buff, 1024, stdin)){
-            printf("Parsing failed, please entr again\n");
-            continue;
-        }
+        general_option = intParseConvert(int_buff);
+
 
         switch(general_option){
             case 0:
@@ -116,10 +115,12 @@ void GeneralOptions(){
             case 1:
                 FilesOptions();
                 break;
+            case -1:
+                numPrintMessage();
+                break;
             default:
                 numPrintMessage();
                 break;
-
         }
     }
 
@@ -130,24 +131,30 @@ void GeneralOptions(){
 void TestFileOptions(){
 
     int test_file_option;
+    char* int_buff = malloc(1024 * sizeof(char));
+    char* buff = malloc(10 * sizeof(char));
 
     while (1){
         printf("Test File Options:\n");
+        printf("  0. Exit Test File Options\n");
         printf("  1. default: Creates default files with default names (can be customized further after creation)\n");
         printf("              further after creation)\n");
         printf("  2. rename : rename existing files\n");
         printf("  3. create : create new files\n");
         printf("  4. delete : delete existing files\n");
-        printf("  5. exit   : exits file options (returns to General Options)\n");
         printf("********************************************************************\n");
-        printf("  6. test check\n");
+        printf("  5. test ifFileExists\n");
+        printf("  6. test strParse\n");
+        //printf("  7. test createFile\n");
         //printf("")
         printf("Number: ");
-        scanf("%i", &test_file_option);
+        test_file_option = intParseConvert(int_buff);
 
         
         switch (test_file_option){
             case 0:
+                free(int_buff);
+                free(buff);
                 return;
             case 1: 
                 DefaultFileCreate();
@@ -158,9 +165,24 @@ void TestFileOptions(){
             case 3:
                 CustomFileCreate();
                 break;
-            case 6:
+            case 5:
                 ifFileExists("testFileName.txt");
                 break;
+            case 6:
+                
+                printf("enter a string: ");
+                //printf("before strParse\n");
+                strParse(buff, 10);
+                if (buff != NULL){
+                    printf("string: %s", buff);
+                }
+                
+                //printf("before clean buffer\n");
+                //clearBuffer();
+                //printf("after Clean buff\n");
+                
+                break;
+            
             default:
                 numPrintMessage();
                 break;
@@ -180,6 +202,7 @@ void FilesOptions(){
 
     while (1){
         printf("File Options:\n");
+        printf("  0. Exit File Options\n");
         printf("  1. default: Creates default files with default names (can be customized further after creation)\n");
         printf("              further after creation)\n");
         printf("  2. rename : rename existing files\n");
@@ -225,18 +248,14 @@ void RenameFile(){
 void CustomFileCreate(){
 
     char* filename = malloc((FILENAME_SIZE + 5) * sizeof(char)); // +5 for .csv\0
+    int filename_size;
+
     while (1){
         printf("Print name of file (upto 100 characters): ");
-        // int filename_size = scanf("%100s", filename);
-        // if (filename_size <= FILENAME_SIZE - 5){
-        //     break;
-        // }
-
-
-        printf("Name is to long\n");
-        printf("Please ");
+        
+        
+        //if (filename_size)
     }
-
 
 
     if (ifFileExists(filename))

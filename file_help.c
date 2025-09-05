@@ -17,14 +17,16 @@ int ifFileExists(char* name){
     return 0;
 }
 
-void createFile(const char* name, FILE* fp){
+void createFile(const char* name){
 
-    fp = fopen(name, "w+");
+    FILE* fp = fopen(name, "w+");
 
     if (!fp){
         perror("Error creating new file");
         return;
     }
+
+    fclose(fp);
 
     return;
 

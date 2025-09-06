@@ -66,6 +66,7 @@ void TestOptions(){
         printf("Test Options:\n");
         printf("  0. Exit program\n");
         printf("  1. Files: Access test file options\n");
+        printf("  2. Modify Options\n");
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
@@ -77,6 +78,9 @@ void TestOptions(){
                 return;
             case 1:
                 TestFileOptions();
+            case 2:
+                printf("not ready yet\n");
+                break;
                 break;
             case -1:
                 numPrintMessage();
@@ -90,7 +94,6 @@ void TestOptions(){
 
     return;
 }
-
 
 void GeneralOptions(){
 
@@ -169,20 +172,12 @@ void TestFileOptions(){
                 ifFileExists("testFileName.txt");
                 break;
             case 6:
-                
                 printf("enter a string: ");
-                //printf("before strParse\n");
                 strParse(buff, 10);
                 if (buff != NULL){
                     printf("string: %s", buff);
                 }
-                
-                //printf("before clean buffer\n");
-                //clearBuffer();
-                //printf("after Clean buff\n");
-                
                 break;
-            
             default:
                 numPrintMessage();
                 break;
@@ -247,19 +242,23 @@ void RenameFile(){
 
 void CustomFileCreate(){
 
-    char* filename = malloc((FILENAME_SIZE + 5) * sizeof(char)); // +5 for .csv\0
-    int filename_size;
+    int filename_size = 8;
+    char* filename = malloc((filename_size + 6) * sizeof(char)); // +5 for .csv\0
+    
 
     while (1){
-        printf("Print name of file (upto 100 characters): ");
+        printf("Print name of file (upto %d characters): ", filename_size);
+        strParse(filename, filename_size);
         
         
-        //if (filename_size)
+        if (ifFileExists(filename))
+        return;
+        else
+        break;
     }
 
 
-    if (ifFileExists(filename))
-        return;
+
     
     FILE* fp = fopen(filename, "w+");
     if (!fp){

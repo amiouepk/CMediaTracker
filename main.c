@@ -10,6 +10,8 @@
 
 //#define FILENAME_SIZE 100
 
+// Random access file
+
 //void exit
 void TestOptions();
 void TestFileOptions();
@@ -58,7 +60,7 @@ int main(int argc, char** argv){
 void TestOptions(){
 
     int test_options;
-    char* int_buff = malloc(1024 * sizeof(char));
+    char* input_buffer = malloc(1024 * sizeof(char));
     char* c_arr;
 
     while (1){
@@ -70,11 +72,11 @@ void TestOptions(){
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        test_options = intParseConvert(int_buff);
+        test_options = newintParseConvert(input_buffer, BUFFSIZE);
 
         switch(test_options){
             case 0:
-                free(int_buff);
+                free(input_buffer);
                 return;
             case 1:
                 TestFileOptions();
@@ -98,7 +100,7 @@ void TestOptions(){
 void GeneralOptions(){
 
     int general_option;
-    char* int_buff = malloc(1024 * sizeof(char));
+    char* input_buffer = malloc(1024 * sizeof(char));
     
     while (1){
         printf("General Options:\n");
@@ -108,12 +110,12 @@ void GeneralOptions(){
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        general_option = intParseConvert(int_buff);
+        general_option = intParseConvert(input_buffer);
 
 
         switch(general_option){
             case 0:
-                free(int_buff);
+                free(input_buffer);
                 return;
             case 1:
                 FilesOptions();
@@ -134,7 +136,7 @@ void GeneralOptions(){
 void TestFileOptions(){
 
     int test_file_option;
-    char* int_buff = malloc(1024 * sizeof(char));
+    char* input_buffer = malloc(1024 * sizeof(char));
     char* buff = malloc(10 * sizeof(char));
 
     while (1){
@@ -151,12 +153,12 @@ void TestFileOptions(){
         //printf("  7. test createFile\n");
         //printf("")
         printf("Number: ");
-        test_file_option = intParseConvert(int_buff);
+        test_file_option = intParseConvert(input_buffer);
 
         
         switch (test_file_option){
             case 0:
-                free(int_buff);
+                free(input_buffer);
                 free(buff);
                 return;
             case 1: 
@@ -242,36 +244,10 @@ void RenameFile(){
 
 void CustomFileCreate(){
 
-    int filename_size = 8;
-    char* filename = malloc((filename_size + 6) * sizeof(char)); // +5 for .csv\0
-    
-
-    while (1){
-        printf("Print name of file (upto %d characters): ", filename_size);
-        strParse(filename, filename_size);
-        
-        
-        if (ifFileExists(filename))
-        return;
-        else
-        break;
-    }
-
-
+    const char* filename = "text.txt";
 
     
-    FILE* fp = fopen(filename, "w+");
-    if (!fp){
-        perror("Error creating file");
-        return;
-    }
 
-    if (fclose(fp) == EOF){
-        perror("Error closing file");
-        return;
-    }
-
-    printf("file is created\n");
 
     return;
 }

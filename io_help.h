@@ -2,6 +2,7 @@
 #define IO_HELP_H
 
 #define FILENAME_SIZE 1024
+#define BUFFSIZE 1024
 
 void startHelpFunction();
 
@@ -10,6 +11,8 @@ void numPrintMessage();
 void clearBuffer();
 
 int intParseConvert(char* int_buff);
+
+int newintParseConvert(char* input_buffer, int input_buffer_length);
 
 void strParse(char* buff, int numchar);
 

@@ -6,6 +6,8 @@
 //#include <bool.h>
 #include "io_help.h"
 
+#define STDIN 0
+
 //#define FILENAME_SIZE 1024
 
 void startHelpFunction(){
@@ -26,14 +28,30 @@ void numPrintMessage(){
 
 void clearBuffer(){
     
-
     int c;
     do {
         c = getchar();
         //printf("%c", c);
-    } while (c != '\n' && c != EOF);
+    } while (c != '\0' && c != EOF);
     
     return;
+}
+
+int newintParseConvert(char* input_buffer, int input_buffer_length){
+    __uint64_t converted_int;
+    
+    int chars_read = read(STDIN, input_buffer, input_buffer_length);
+    if (chars_read < 0){
+        perror("read error");
+        errno = 0;
+        return -1;
+    }
+    
+    
+    
+
+
+    return converted_int;
 }
 
 int intParseConvert(char* int_buff){
@@ -51,6 +69,7 @@ int intParseConvert(char* int_buff){
     conv_int = strtol(int_buff, &endptr, 10);
     if (errno != 0){
         perror("Parsing error: check entered number");
+        errno = 0;
         return -1;
     }
     if (endptr == int_buff){
@@ -78,10 +97,21 @@ void strParse(char* buff, int numchar){
         printf("Please make sure name is under %d characters\n", FILENAME_SIZE);
         clearBuffer();
     }
+
+    for (int i = 0; i < numchar; i++){
+        if (buff[i] == '\n'){
+            printf("/n");
+            continue;
+        }
+        if (buff[i] == '\0'){
+            printf("/0");
+            continue;
+        }
+        printf("%c", buff[i]);
+    }
+
+    printf("\n");
         
-    //printf("%s\n", buff);
-
-
 
     return;
 }

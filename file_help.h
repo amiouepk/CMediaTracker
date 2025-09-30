@@ -6,6 +6,8 @@ int ifFileExists(const char* name);
 
 void createFile(const char* name, FILE* fp);
 
+char* filenameFilter(char* filename_raw);
+
 
 
 

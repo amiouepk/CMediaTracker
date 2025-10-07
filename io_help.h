@@ -2,7 +2,7 @@
 #define IO_HELP_H
 
 #define FILENAME_SIZE 1024
-#define BUFFSIZE 1024
+#define BUFFSIZE 5
 
 void startHelpFunction();
 

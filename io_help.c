@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
 //#include <bool.h>
 #include "io_help.h"
 
@@ -38,7 +39,7 @@ void clearBuffer(){
 }
 
 int newintParseConvert(char* input_buffer, int input_buffer_length){
-    __uint64_t converted_int;
+    int converted_int = 2;
     
     int chars_read = read(STDIN, input_buffer, input_buffer_length);
     if (chars_read < 0){
@@ -47,8 +48,10 @@ int newintParseConvert(char* input_buffer, int input_buffer_length){
         return -1;
     }
     
-    
-    
+    printf("chars_read: %d\n", chars_read);
+    //printf("input_buffer: %s\n", input_buffer);
+
+    converted_int = strtol(input_buffer, NULL, 0);
 
 
     return converted_int;

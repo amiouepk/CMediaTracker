@@ -60,7 +60,7 @@ int main(int argc, char** argv){
 void TestOptions(){
 
     int test_options;
-    char* input_buffer = malloc(1024 * sizeof(char));
+    char* input_buffer = malloc(BUFFSIZE * sizeof(char));
     char* c_arr;
 
     while (1){
@@ -80,9 +80,9 @@ void TestOptions(){
                 return;
             case 1:
                 TestFileOptions();
+                break;
             case 2:
                 printf("not ready yet\n");
-                break;
                 break;
             case -1:
                 numPrintMessage();

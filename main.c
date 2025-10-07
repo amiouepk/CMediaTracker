@@ -79,7 +79,7 @@ void TestOptions(){
                 free(input_buffer);
                 return;
             case 1:
-                TestFileOptions();
+                TestFileOptions(input_buffer);
                 break;
             case 2:
                 printf("not ready yet\n");
@@ -110,7 +110,7 @@ void GeneralOptions(){
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        general_option = intParseConvert(input_buffer);
+        general_option = newintParseConvert(input_buffer, BUFFSIZE);
 
 
         switch(general_option){
@@ -118,7 +118,7 @@ void GeneralOptions(){
                 free(input_buffer);
                 return;
             case 1:
-                FilesOptions();
+                FilesOptions(input_buffer);
                 break;
             case -1:
                 numPrintMessage();
@@ -133,11 +133,11 @@ void GeneralOptions(){
 
 }
 
-void TestFileOptions(){
+void TestFileOptions(char* input_buffer){
 
     int test_file_option;
-    char* input_buffer = malloc(1024 * sizeof(char));
-    char* buff = malloc(10 * sizeof(char));
+    //char* input_buffer = malloc(1024 * sizeof(char));
+    //char* buff = malloc(10 * sizeof(char));
 
     while (1){
         printf("Test File Options:\n");
@@ -153,13 +153,13 @@ void TestFileOptions(){
         //printf("  7. test createFile\n");
         //printf("")
         printf("Number: ");
-        test_file_option = intParseConvert(input_buffer);
+        test_file_option = newintParseConvert(input_buffer, BUFFSIZE);
 
         
         switch (test_file_option){
             case 0:
-                free(input_buffer);
-                free(buff);
+                //free(input_buffer);
+                //free(buff);
                 return;
             case 1: 
                 DefaultFileCreate();
@@ -174,11 +174,7 @@ void TestFileOptions(){
                 ifFileExists("testFileName.txt");
                 break;
             case 6:
-                printf("enter a string: ");
-                strParse(buff, 10);
-                if (buff != NULL){
-                    printf("string: %s", buff);
-                }
+                printf("enter a string: \n");
                 break;
             default:
                 numPrintMessage();
@@ -193,7 +189,7 @@ void TestFileOptions(){
     return;
 }
 
-void FilesOptions(){
+void FilesOptions(char* input_buffer){
 
     int file_option;
 
@@ -206,8 +202,8 @@ void FilesOptions(){
         printf("  3. create : create new files\n");
         printf("  4. delete : delete existing files\n");
         printf("  5. exit   : exits file options (returns to General Options)\n");
-            printf("Number: ");
-        scanf("%i", &file_option);
+        printf("Number: ");
+        file_option = newintParseConvert(input_buffer, BUFFSIZE);
         
         switch (file_option){
             case 1: 

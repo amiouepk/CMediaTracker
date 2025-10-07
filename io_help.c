@@ -48,8 +48,7 @@ int newintParseConvert(char* input_buffer, int input_buffer_length){
         return -1;
     }
     
-    printf("chars_read: %d\n", chars_read);
-    //printf("input_buffer: %s\n", input_buffer);
+    // printf("chars_read: %d\n", chars_read);
 
     converted_int = strtol(input_buffer, NULL, 0);
 

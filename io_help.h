@@ -8,13 +8,15 @@ void startHelpFunction();
 
 void numPrintMessage();
 
-void clearBuffer();
+//void clearBuffer();
 
 int intParseConvert(char* int_buff);
 
 int newintParseConvert(char* input_buffer, int input_buffer_length);
 
 void strParse(char* buff, int numchar);
+
+void newStrParse(char* input_buffer, int input_buffer_length);
 
 
 

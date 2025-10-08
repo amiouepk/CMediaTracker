@@ -39,7 +39,8 @@ void clearBuffer(){
 }
 
 int newintParseConvert(char* input_buffer, int input_buffer_length){
-    int converted_int = 2;
+    
+    int converted_int;
     
     int chars_read = read(STDIN, input_buffer, input_buffer_length);
     if (chars_read < 0){
@@ -80,6 +81,23 @@ int intParseConvert(char* int_buff){
     }
 
     return conv_int;
+}
+
+
+void newStrParse(char* input_buffer, int input_buffer_length){
+
+    //int converted_int;
+    
+    int chars_read = read(STDIN, input_buffer, input_buffer_length);
+    if (chars_read < 0){
+        perror("read error");
+        errno = 0;
+        return;
+    }
+
+
+
+    return;
 }
 
 void strParse(char* buff, int numchar){

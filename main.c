@@ -175,6 +175,8 @@ void TestFileOptions(char* input_buffer){
                 break;
             case 6:
                 printf("enter a string: \n");
+                newStrParse(input_buffer, BUFFSIZE);
+                printf("%s", input_buffer);
                 break;
             default:
                 numPrintMessage();
@@ -206,6 +208,8 @@ void FilesOptions(char* input_buffer){
         file_option = newintParseConvert(input_buffer, BUFFSIZE);
         
         switch (file_option){
+            case 0:
+                return;
             case 1: 
                 DefaultFileCreate();
                 break;

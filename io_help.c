@@ -27,14 +27,28 @@ void numPrintMessage(){
     return;
 }
 
-void clearBuffer(){
-    
-    int c;
+static void clearBuffer(char* input_buffer, int input_buffer_length, int chars_read){
+
+    if (chars_read < input_buffer_length){
+        return;
+    }
+
+    chars_read = 0;
+
+
     do {
-        c = getchar();
-        //printf("%c", c);
-    } while (c != '\0' && c != EOF);
-    
+        //printf("in loop\n");
+        chars_read = read(STDIN, input_buffer, input_buffer_length);
+        //printf("finished read\n");
+        if (chars_read < 0){
+            perror("clearBuffer read error");
+            errno = 0;
+            return;
+        }
+        //printf("Buffer clearing\n");
+
+    } while (chars_read == input_buffer_length);
+
     return;
 }
 
@@ -50,8 +64,14 @@ int newintParseConvert(char* input_buffer, int input_buffer_length){
     }
     
     // printf("chars_read: %d\n", chars_read);
-
+    //char** endptr;
     converted_int = strtol(input_buffer, NULL, 0);
+    // if (*endptr == input_buffer){
+    //     return -1;
+    // }
+
+    
+    clearBuffer(input_buffer, input_buffer_length, chars_read);
 
 
     return converted_int;
@@ -95,6 +115,7 @@ void newStrParse(char* input_buffer, int input_buffer_length){
         return;
     }
 
+    clearBuffer(input_buffer, input_buffer_length, chars_read);
 
 
     return;
@@ -107,7 +128,7 @@ void strParse(char* buff, int numchar){
 
     if (!fgets(buff, numchar + 2, stdin)){
         printf("Parsing failed, please enter again\n");
-        clearBuffer();
+        clearBuffer(buff, numchar, 0);
         //return -1;
     }
     
@@ -115,7 +136,7 @@ void strParse(char* buff, int numchar){
     //printf("buff_check: %c\n", buff_check);
     if (buff_check == NULL){
         printf("Please make sure name is under %d characters\n", FILENAME_SIZE);
-        clearBuffer();
+        clearBuffer(buff, numchar, 0);
     }
 
     for (int i = 0; i < numchar; i++){

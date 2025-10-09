@@ -21,3 +21,5 @@ make: $(OBJS)
 
 clean:
 	rm $(DEST_DIR)/program.exe
+
+recomp: clean make	

@@ -22,7 +22,7 @@ void startHelpFunction(){
 }
 
 void numPrintMessage(){
-    printf("\n");
+    //printf("\n");
     printf("Type a number 1-9 according to the list below\n");
     return;
 }
@@ -54,13 +54,13 @@ static void clearBuffer(char* input_buffer, int input_buffer_length, int chars_r
 
 int newintParseConvert(char* input_buffer, int input_buffer_length){
     
-    int converted_int;
+    int converted_int = -1;
     
     int chars_read = read(STDIN, input_buffer, input_buffer_length);
     if (chars_read < 0){
         perror("read error");
         errno = 0;
-        return -1;
+        return converted_int;
     }
     
     // printf("chars_read: %d\n", chars_read);
@@ -69,7 +69,11 @@ int newintParseConvert(char* input_buffer, int input_buffer_length){
     // if (*endptr == input_buffer){
     //     return -1;
     // }
-
+    if (errno != 0){
+        perror("Unsupported value");
+        errno = 0;
+        return converted_int;
+    }
     
     clearBuffer(input_buffer, input_buffer_length, chars_read);
 

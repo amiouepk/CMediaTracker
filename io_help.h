@@ -10,13 +10,13 @@ void numPrintMessage();
 
 //void clearBuffer();
 
-int intParseConvert(char* int_buff);
+int oldintParseConvert(char* int_buff);
 
-int newintParseConvert(char* input_buffer, int input_buffer_length);
+int intParseConvert(char* input_buffer, int input_buffer_length);
 
-void strParse(char* buff, int numchar);
+void oldstrParse(char* buff, int numchar);
 
-void newStrParse(char* input_buffer, int input_buffer_length);
+void strParse(char* input_buffer, int input_buffer_length);
 
 
 

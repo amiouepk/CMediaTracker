@@ -72,7 +72,7 @@ void TestOptions(){
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        test_options = newintParseConvert(input_buffer, BUFFSIZE);
+        test_options = intParseConvert(input_buffer, BUFFSIZE);
 
         switch(test_options){
             case 0:
@@ -110,7 +110,7 @@ void GeneralOptions(){
         //printf("              \n");
         //printf("\n");
         printf("Number: ");
-        general_option = newintParseConvert(input_buffer, BUFFSIZE);
+        general_option = intParseConvert(input_buffer, BUFFSIZE);
 
 
         switch(general_option){
@@ -153,7 +153,7 @@ void TestFileOptions(char* input_buffer){
         //printf("  7. test createFile\n");
         //printf("")
         printf("Number: ");
-        test_file_option = newintParseConvert(input_buffer, BUFFSIZE);
+        test_file_option = intParseConvert(input_buffer, BUFFSIZE);
 
         
         switch (test_file_option){
@@ -175,7 +175,7 @@ void TestFileOptions(char* input_buffer){
                 break;
             case 6:
                 printf("enter a string: \n");
-                newStrParse(input_buffer, BUFFSIZE);
+                strParse(input_buffer, BUFFSIZE);
                 printf("%s", input_buffer);
                 break;
             default:
@@ -205,7 +205,7 @@ void FilesOptions(char* input_buffer){
         printf("  4. delete : delete existing files\n");
         printf("  5. exit   : exits file options (returns to General Options)\n");
         printf("Number: ");
-        file_option = newintParseConvert(input_buffer, BUFFSIZE);
+        file_option = intParseConvert(input_buffer, BUFFSIZE);
         
         switch (file_option){
             case 0:

@@ -52,7 +52,7 @@ static void clearBuffer(char* input_buffer, int input_buffer_length, int chars_r
     return;
 }
 
-int newintParseConvert(char* input_buffer, int input_buffer_length){
+int intParseConvert(char* input_buffer, int input_buffer_length){
     
     int converted_int = -1;
     
@@ -81,7 +81,7 @@ int newintParseConvert(char* input_buffer, int input_buffer_length){
     return converted_int;
 }
 
-int intParseConvert(char* int_buff){
+int oldintParseConvert(char* int_buff){
 
     int conv_int;
     char* endptr;
@@ -108,7 +108,7 @@ int intParseConvert(char* int_buff){
 }
 
 
-void newStrParse(char* input_buffer, int input_buffer_length){
+void strParse(char* input_buffer, int input_buffer_length){
 
     //int converted_int;
     
@@ -118,6 +118,7 @@ void newStrParse(char* input_buffer, int input_buffer_length){
         errno = 0;
         return;
     }
+    
 
     clearBuffer(input_buffer, input_buffer_length, chars_read);
 
@@ -125,7 +126,7 @@ void newStrParse(char* input_buffer, int input_buffer_length){
     return;
 }
 
-void strParse(char* buff, int numchar){
+void oldstrParse(char* buff, int numchar){
     
     //plus two to make space for '\n' and '\0'
     //include '\n' because if the size is <= 1024, '\n' will be present, but if > 1024, it will not be present

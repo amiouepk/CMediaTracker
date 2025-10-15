@@ -3,6 +3,7 @@
 #include <errno.h>
 //#include <bool.h>
 #include <getopt.h>
+#include <string.h>
 #include "io_help.h"
 #include "file_help.h"
 
@@ -18,7 +19,7 @@ void TestFileOptions();
 void GeneralOptions();
 void FilesOptions();
 void DefaultFileCreate();
-void CustomFileCreate();
+void CustomFileCreate(char* input_buffer, int input_buffer_length);
 void RenameFile();
 
 
@@ -168,7 +169,7 @@ void TestFileOptions(char* input_buffer){
                 RenameFile();
                 break;
             case 3:
-                CustomFileCreate();
+                CustomFileCreate(input_buffer, BUFFSIZE);
                 break;
             case 5:
                 ifFileExists("testFileName.txt");
@@ -217,7 +218,7 @@ void FilesOptions(char* input_buffer){
                 RenameFile();
                 break;
             case 3:
-                CustomFileCreate();
+                CustomFileCreate(input_buffer, FILENAME_SIZE);
                 break;
             default:
                 numPrintMessage();
@@ -242,11 +243,39 @@ void RenameFile(){
     return;
 }
 
-void CustomFileCreate(){
+void CustomFileCreate(char* input_buffer, int input_buffer_length){
 
-    const char* filename = "text.txt";
+    //const char* filename = "text.txt";
+    // printf("Enter file name (100 characters max): ");
 
+    if (FILENAME_SIZE > BUFFSIZE - 1){
+        fprintf(stderr, "filename size is greater than buffer size, please change in code\n");
+    }
+
+    //need to put this part in a loop up until (look for here for the end of loop)
+
+    int filename_size = strParse(input_buffer, FILENAME_SIZE);
+
+    char* filename = malloc(filename_size * sizeof(char));
     
+    strncpy(filename, input_buffer, filename_size);
+
+    printf("\nFilename: ");
+    for (int i = 0; i < filename_size; i++){
+        printf("%c", filename[i]);
+    }
+    printf("\n");
+
+    if (ifFileExists(filename)){
+        fprintf(stderr, "file with this name already exists\n");
+        return;
+    }
+    
+    createFile(filename);
+
+
+
+    // here  
 
 
     return;

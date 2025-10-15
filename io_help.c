@@ -27,14 +27,33 @@ void numPrintMessage(){
     return;
 }
 
-static void clearBuffer(char* input_buffer, int input_buffer_length, int chars_read){
+/*
+ * confused as too the efficacy of the implementation of this function. I cannot tell if it is
+ * alright to use the same buffer as the input buffer. I want to return an error if the chars_read
+ * seems to be greater than it needs to be. the length the input string needs to be doesnt seem to
+ * be the length of the input buffer, and it probably shouldn't sepecially if i want to implement
+ * my own null termination. What do I do if the input is longer than it should be? I should either
+ * return an error, or i should just cut off the input and use the x number character work and 
+ * pass back to function. I want to return error for sure. How do I do this? i could do an
+ * internal check, and check if chars_read exceeds the desired length using chars_read. I might
+ * try and do this. And when and how should i clean the buffer? should i do so no matter what? I 
+ * built in an immeidate return of chars_read is less than input_buffer_length. 
+ */  
 
-    if (chars_read < input_buffer_length){
-        return;
-    }
+ 
+/*
+ * The way the clear funciton is going to be used in the future:
+ * IF it is determined that the buffer needs to be cleared, you call the clearBuffer function.
+ * This is IF is determined via the following criteria:
+ *  1. Is the input amount larger than what is should be?
+ *  2. Was the input characters invalid in some way (for int parse)
+ *  
+ * 
+ */
 
-    chars_read = 0;
+static void clearBuffer(char* input_buffer, int input_buffer_length){
 
+    int chars_read = 0;
 
     do {
         //printf("in loop\n");
@@ -52,11 +71,42 @@ static void clearBuffer(char* input_buffer, int input_buffer_length, int chars_r
     return;
 }
 
-int intParseConvert(char* input_buffer, int input_buffer_length){
+//returns size
+int strParse(char* input_buffer, int length_limit){
+
+    //int converted_int;
+    
+    int chars_read = read(STDIN, input_buffer, BUFFSIZE - 1);
+    if (chars_read < 0){
+        perror("read error");
+        errno = 0;
+        return -1;
+    }
+
+    if (chars_read > length_limit){
+        fprintf(stderr, "Error: Maximum character limit is %d", length_limit);
+        return -1;
+
+    }
+    
+    if (chars_read > BUFFSIZE){
+        clearBuffer(input_buffer, BUFFSIZE);
+        return -1;
+    }
+
+    // null termination portion to make printing strings more convenient
+    input_buffer[chars_read] = '\0';
+
+    return chars_read;
+}
+
+//Need to implement non blocking with fcntl for reads to cleaer buffer later, not tryna do that rn
+
+int intParseConvert(char* input_buffer, int length_limit) {
     
     int converted_int = -1;
     
-    int chars_read = read(STDIN, input_buffer, input_buffer_length);
+    int chars_read = read(STDIN, input_buffer, length_limit);
     if (chars_read < 0){
         perror("read error");
         errno = 0;
@@ -74,12 +124,15 @@ int intParseConvert(char* input_buffer, int input_buffer_length){
         errno = 0;
         return converted_int;
     }
+
+    //if (chars_read ==)
     
-    clearBuffer(input_buffer, input_buffer_length, chars_read);
+    
 
 
     return converted_int;
 }
+
 
 int oldintParseConvert(char* int_buff){
 
@@ -108,24 +161,6 @@ int oldintParseConvert(char* int_buff){
 }
 
 
-void strParse(char* input_buffer, int input_buffer_length){
-
-    //int converted_int;
-    
-    int chars_read = read(STDIN, input_buffer, input_buffer_length);
-    if (chars_read < 0){
-        perror("read error");
-        errno = 0;
-        return;
-    }
-    
-
-    clearBuffer(input_buffer, input_buffer_length, chars_read);
-
-
-    return;
-}
-
 void oldstrParse(char* buff, int numchar){
     
     //plus two to make space for '\n' and '\0'
@@ -133,7 +168,7 @@ void oldstrParse(char* buff, int numchar){
 
     if (!fgets(buff, numchar + 2, stdin)){
         printf("Parsing failed, please enter again\n");
-        clearBuffer(buff, numchar, 0);
+        clearBuffer(buff, numchar);
         //return -1;
     }
     
@@ -141,7 +176,7 @@ void oldstrParse(char* buff, int numchar){
     //printf("buff_check: %c\n", buff_check);
     if (buff_check == NULL){
         printf("Please make sure name is under %d characters\n", FILENAME_SIZE);
-        clearBuffer(buff, numchar, 0);
+        clearBuffer(buff, numchar);
     }
 
     for (int i = 0; i < numchar; i++){

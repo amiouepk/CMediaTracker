@@ -5,10 +5,10 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
-//#include "io_help.h"
+#include "file_help.h"
 
 
-int ifFileExists(char* name){
+int ifFileExists(const char* name){
 
     if (!access(name, F_OK)){
         return 1;
@@ -19,7 +19,10 @@ int ifFileExists(char* name){
 
 void createFile(const char* name){
 
-    FILE* fp = fopen(name, "w+");
+    printf("%s", name);
+
+    char* filename = "test.txt";
+    FILE* fp = fopen(filename, "w+");
 
     if (!fp){
         perror("Error creating new file");

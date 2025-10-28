@@ -254,6 +254,7 @@ void CustomFileCreate(char* input_buffer, int input_buffer_length){
 
     //need to put this part in a loop up until (look for here for the end of loop)
 
+    printf("Enter file name (max 100 characters): ");
     int filename_size = strParse(input_buffer, FILENAME_SIZE);
 
     char* filename = malloc(filename_size * sizeof(char));
@@ -262,7 +263,15 @@ void CustomFileCreate(char* input_buffer, int input_buffer_length){
 
     printf("\nFilename: ");
     for (int i = 0; i < filename_size; i++){
-        printf("%c", filename[i]);
+        if (filename[i] == '\n'){
+            printf("|NL|");
+        }
+        else if (filename[i] == '\0'){
+            printf("|NC|");
+        }
+        else {
+            printf("%c", filename[i]);
+        }
     }
     printf("\n");
 

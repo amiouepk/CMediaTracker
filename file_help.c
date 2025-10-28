@@ -19,10 +19,12 @@ int ifFileExists(const char* name){
 
 void createFile(const char* name){
 
-    printf("%s", name);
+    printf("%s\n", name);
 
-    char* filename = "test.txt";
-    FILE* fp = fopen(filename, "w+");
+    
+
+    //char* filename = "test.txt";
+    FILE* fp = fopen(name, "w+");
 
     if (!fp){
         perror("Error creating new file");

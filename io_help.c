@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <fcntl.h>
 #include <unistd.h>
 //#include <bool.h>
 #include "io_help.h"
@@ -53,20 +54,9 @@ void numPrintMessage(){
 
 static void clearBuffer(char* input_buffer, int input_buffer_length){
 
-    int chars_read = 0;
+    int c;
 
-    do {
-        //printf("in loop\n");
-        chars_read = read(STDIN, input_buffer, input_buffer_length);
-        //printf("finished read\n");
-        if (chars_read < 0){
-            perror("clearBuffer read error");
-            errno = 0;
-            return;
-        }
-        //printf("Buffer clearing\n");
-
-    } while (chars_read == input_buffer_length);
+    while ( (c = getchar()) != '\n' && c != EOF ) { }
 
     return;
 }
@@ -76,7 +66,7 @@ int strParse(char* input_buffer, int length_limit){
 
     //int converted_int;
     
-    int chars_read = read(STDIN, input_buffer, BUFFSIZE - 1);
+    int chars_read = read(STDIN, input_buffer, length_limit);
     if (chars_read < 0){
         perror("read error");
         errno = 0;
@@ -85,19 +75,15 @@ int strParse(char* input_buffer, int length_limit){
 
     if (chars_read > length_limit){
         fprintf(stderr, "Error: Maximum character limit is %d", length_limit);
-        return -1;
-
-    }
-    
-    if (chars_read > BUFFSIZE){
         clearBuffer(input_buffer, BUFFSIZE);
         return -1;
+
     }
 
     // null termination portion to make printing strings more convenient
-    input_buffer[chars_read] = '\0';
+    input_buffer[chars_read - 1] = '\0';
 
-    return chars_read;
+    return chars_read + 1;
 }
 
 //Need to implement non blocking with fcntl for reads to cleaer buffer later, not tryna do that rn
@@ -106,7 +92,7 @@ int intParseConvert(char* input_buffer, int length_limit) {
     
     int converted_int = -1;
     
-    int chars_read = read(STDIN, input_buffer, length_limit);
+    int chars_read = read(STDIN, input_buffer, BUFFSIZE);
     if (chars_read < 0){
         perror("read error");
         errno = 0;
@@ -114,21 +100,32 @@ int intParseConvert(char* input_buffer, int length_limit) {
     }
     
     // printf("chars_read: %d\n", chars_read);
-    //char** endptr;
-    converted_int = strtol(input_buffer, NULL, 0);
-    // if (*endptr == input_buffer){
-    //     return -1;
-    // }
+    char* endptr;
+    converted_int = strtol(input_buffer, &endptr, 0);
+    
     if (errno != 0){
         perror("Unsupported value");
         errno = 0;
         return converted_int;
     }
 
-    //if (chars_read ==)
-    
-    
+    if (endptr == input_buffer) {
+        fprintf(stderr, "Error: No valid digits found in input.\n");
+        clearBuffer(input_buffer, BUFFSIZE);
+        return -1; // Or some other error indicator
+    }
 
+    if (*endptr != '\0'){
+        printf("chars_read: %d\n", chars_read);
+
+        clearBuffer(input_buffer, BUFFSIZE);
+
+        return converted_int;
+        
+    }
+
+    
+    //
 
     return converted_int;
 }

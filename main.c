@@ -157,6 +157,7 @@ void TestFileOptions(char* input_buffer){
         test_file_option = intParseConvert(input_buffer, BUFFSIZE);
 
         
+        
         switch (test_file_option){
             case 0:
                 //free(input_buffer);
@@ -175,9 +176,11 @@ void TestFileOptions(char* input_buffer){
                 ifFileExists("testFileName.txt");
                 break;
             case 6:
-                printf("enter a string: \n");
-                strParse(input_buffer, BUFFSIZE);
-                printf("%s", input_buffer);
+                printf("enter a string: ");
+                
+                if (strParse(input_buffer, BUFFSIZE)) {
+                    printf("%s\n", input_buffer);
+                }
                 break;
             default:
                 numPrintMessage();

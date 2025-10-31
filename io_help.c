@@ -69,14 +69,15 @@ int strParse(char* input_buffer, int length_limit){
     int chars_read = read(STDIN, input_buffer, length_limit);
     if (chars_read < 0){
         perror("read error");
+        clearBuffer(input_buffer, BUFFSIZE);
         errno = 0;
-        return -1;
+        return 0;
     }
 
-    if (chars_read > length_limit){
-        fprintf(stderr, "Error: Maximum character limit is %d", length_limit);
+    if (chars_read >= length_limit){
+        fprintf(stderr, "Error: Maximum character limit is %d\n", length_limit);
         clearBuffer(input_buffer, BUFFSIZE);
-        return -1;
+        return 0;
 
     }
 

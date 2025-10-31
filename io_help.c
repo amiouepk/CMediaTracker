@@ -56,7 +56,7 @@ static void clearBuffer(char* input_buffer, int input_buffer_length){
 
     int c;
 
-    while ( (c = getchar()) != '\n' && c != EOF ) { }
+    while ((c = getchar()) != '\n' && c != EOF) { }
 
     return;
 }
@@ -91,7 +91,7 @@ int strParse(char* input_buffer, int length_limit){
 int intParseConvert(char* input_buffer, int length_limit) {
     
     int converted_int = -1;
-    
+
     int chars_read = read(STDIN, input_buffer, BUFFSIZE);
     if (chars_read < 0){
         perror("read error");
@@ -99,14 +99,17 @@ int intParseConvert(char* input_buffer, int length_limit) {
         return converted_int;
     }
     
-    // printf("chars_read: %d\n", chars_read);
+   
+
     char* endptr;
     converted_int = strtol(input_buffer, &endptr, 0);
     
+    
     if (errno != 0){
         perror("Unsupported value");
+        clearBuffer(input_buffer, BUFFSIZE);
         errno = 0;
-        return converted_int;
+        return -1;
     }
 
     if (endptr == input_buffer) {
@@ -115,14 +118,16 @@ int intParseConvert(char* input_buffer, int length_limit) {
         return -1; // Or some other error indicator
     }
 
-    if (*endptr != '\0'){
-        printf("chars_read: %d\n", chars_read);
-
+    if (*endptr != '\n'){
+        //printf("chars_read: %d\n", chars_read);
+        fprintf(stderr, "Error: Invalid digits found in input.\n");
         clearBuffer(input_buffer, BUFFSIZE);
 
-        return converted_int;
+        return -1;
         
     }
+
+     
 
     
     //
